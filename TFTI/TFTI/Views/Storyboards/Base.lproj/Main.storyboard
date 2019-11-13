@@ -51,7 +51,7 @@
                                         <state key="normal" title="Login"/>
                                         <connections>
                                             <action selector="logInButtonTapped:" destination="zYd-rj-Mlj" eventType="touchUpInside" id="YhR-bO-jow"/>
-                                            <segue destination="7LB-d1-4iH" kind="show" id="XW6-nS-5gD"/>
+                                            <segue destination="7LB-d1-4iH" kind="presentation" modalPresentationStyle="fullScreen" id="wNy-IF-fuh"/>
                                         </connections>
                                     </button>
                                 </subviews>

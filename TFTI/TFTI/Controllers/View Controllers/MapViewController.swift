@@ -10,25 +10,38 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController, UISearchBarDelegate {
+class MapViewController: UIViewController, UISearchBarDelegate, UISearchControllerDelegate {
     
     //MARK: - Outlets
-    @IBOutlet weak var mapScreen: MKMapView!
-    
-    @IBOutlet weak var addressLabel: UILabel!
-    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var inviteDrawerContainerView: UIView!
+    @IBOutlet weak var closeDrawerButton: UIButton!
     
     //MARK: - Properties
-    
+    weak var inviteVC: InviteDrawerViewController?
     let locationManager = CLLocationManager()
     let regionInMeters: Double = 10000
     var previousLocation: CLLocation?
     var directionsArray:[MKDirections] = []
+    var businessSearchResult: [Business] = []
+    var drawerIsHidden: Bool = true
+    var searchController: UISearchController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
-
+        inviteDrawerContainerView.isHidden = true
+        mapView.register(MKPointAnnotation.self, forAnnotationViewWithReuseIdentifier: "pinView")
+        closeDrawerButton.isEnabled = false
+        setUpSearchController()
+        
+    }
+    
+    func setUpSearchController() {
+        searchController = UISearchController()
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController?.searchBar.delegate = self
     }
     
     func setupLocationmanager() {
@@ -36,121 +49,161 @@ class MapViewController: UIViewController, UISearchBarDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+    func showDrawer() {
+        closeDrawerButton.isEnabled = true
+        UIView.animate(withDuration: 0.5, animations: {
+            if self.drawerIsHidden {
+                self.inviteDrawerContainerView.isHidden = false
+                self.drawerIsHidden = false
+            } else {
+                self.inviteDrawerContainerView.isHidden = false
+                self.drawerIsHidden = false
+            }
+        }) { (success) in
+            if success {
+                print("Successfully animated drawer view")
+            } else {
+                print("Drawer is jammed")
+            }
+        }
+    }
     
     func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             setupLocationmanager()
             checkLocationAuthorization()
         } else {
-            // show alert letting the user know to turn this on
+            let alertController = UIAlertController(title: "Location Services", message: "TFTI needs will not work without your access to your location. Please go to Settings -> Privacy -> Location Services and select 'While Using'.", preferredStyle: .alert)
+            self.present(alertController, animated: true)
         }
     }
     
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-            mapScreen.setRegion(region, animated: true)
+            mapView.setRegion(region, animated: true)
         }
     }
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse:
-          startTrackingUserLocation()
+            mapView.delegate = self
+            startTrackingUserLocation()
             break
         case .denied:
-            // show alert instructing them to give permission
+            let alertController = UIAlertController(title: "Location Services", message: "TFTI needs will not work without your access to your location. Please go to Settings -> Privacy -> Location Services and select 'While Using'.", preferredStyle: .alert)
+            self.present(alertController, animated: true)
             break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted:
-            // show an alert
+            let alertController = UIAlertController(title: "Location Services", message: "Disable Restrictions to use TFTI", preferredStyle: .alert)
+            self.present(alertController, animated: true)
             break
         case .authorizedAlways:
             break
+        @unknown default:
+            fatalError()
         }
     }
     
     func startTrackingUserLocation() {
-        mapScreen.showsUserLocation = true
+        mapView.showsUserLocation = true
         centerViewOnUserLocation()
         locationManager.startUpdatingLocation()
-        previousLocation = getCenterLocation(for: mapScreen)
     }
     
-    
-    func getCenterLocation(for mapView: MKMapView) -> CLLocation {
-        let latitude = mapView.centerCoordinate.latitude
-        let longitude = mapView.centerCoordinate.longitude
-        
-        return CLLocation(latitude: latitude, longitude: longitude)
+    func getCenterLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    func getDirections() {
-        guard let location = locationManager.location?.coordinate else {
-            // TODO - inform user we dont have their current location
-            return
-        }
-        
-        let request = createDirectionsRequest(from: location)
-        let directions = MKDirections(request: request)
-        resetMapView(withNew: directions)
-        
-        directions.calculate { [unowned self] (response, error) in
-            if let error = error {
-                print("Error in \(#function) : \(error.localizedDescription) \n---\n \(error)")
-                return
-            }
-            
-            guard let response = response else { return } //TODO show response not available in alert
-            
-            for route in response.routes {
-                let steps = route.steps
-                self.mapScreen.addOverlay(route.polyline)
-                self.mapScreen.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-            }
-        }
+    func getTopResultLocation(business: Business) {
+        let coordinate = CLLocationCoordinate2D(latitude: business.coordinates.latitude, longitude: business.coordinates.longitude)
+        let coordinateRegion = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    func createDirectionsRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request {
-        let destinationCoordinate = getCenterLocation(for: mapScreen).coordinate
+    func createDirectionsRequest(from coordinate: CLLocationCoordinate2D, destination: MKPlacemark) -> MKDirections.Request {
         let startingLocation = MKPlacemark(coordinate: coordinate)
-        let destination = MKPlacemark(coordinate: destinationCoordinate)
         
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: startingLocation)
         request.destination = MKMapItem(placemark: destination)
         request.transportType = .automobile
-        request.requestsAlternateRoutes = true
+        
         
         return request
     }
     
     func resetMapView(withNew directions: MKDirections) {
-        mapScreen.removeOverlays(mapScreen.overlays)
+        mapView.removeOverlays(mapView.overlays)
         directionsArray.append(directions)
         let _ = directionsArray.map { $0.cancel() }
-        //remove diretion from array?
+        directionsArray.remove(at: 0)
         
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        dismiss(animated: true, completion: nil)
+        self.inviteDrawerContainerView.isHidden = true
         
-        //create search request
+        
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        BusinessController.fetchBusiness(term: searchText, location: nil, latitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude) { (results) in
+            DispatchQueue.main.async {
+                self.findBusinessesAnnotation(businesses: results)
+            }
+        }
+    }
+    
+    func findBusinessesAnnotation(businesses: [Business]) {
+       
+        var annotations : [BusinessAnnotation] = []
+        for business in businesses {
+            let annotation = BusinessAnnotation(business: business)
+            annotations.append(annotation)
+        }
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(annotations)
+        getTopResultLocation(business: businesses[0])
+        searchController?.isActive = false
+    }
 
+    //MARK: - Map Drawer Methods
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toInviteDrawerVC" {
+            let inviteDrawer = segue.destination as? InviteDrawerViewController
+            inviteDrawer?.delegate = self
+            self.inviteVC = inviteDrawer
+        }
     }
     
-    //MARK: actions
-    @IBAction func searchButtonTapped(_ sender: Any) {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.delegate = self
-        present(searchController, animated: true, completion: nil)
+    //MARK: - Actions
+    
+    @IBAction func findMyLocationButtonTapped(_ sender: Any) {
+        startTrackingUserLocation()
     }
     
-    @IBAction func directionsButtonTapped(_ sender: Any) {
-        getDirections()
+    
+    @IBAction func drawerCloseButtonTapped(_ sender: Any) {
+        UIView.animate(withDuration: 0.3, animations: {
+            if self.drawerIsHidden {
+                self.inviteDrawerContainerView.isHidden = false
+                self.drawerIsHidden = false
+            } else {
+                self.inviteDrawerContainerView.isHidden = true
+                self.drawerIsHidden = true
+            }
+        }) { (success) in
+            if success {
+                print("Successfully animated drawer view")
+            } else {
+                print("Drawer is jammed")
+            }
+        }
     }
     
 } // End Of Class
@@ -163,40 +216,57 @@ extension MapViewController: CLLocationManagerDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let center = getCenterLocation(for: mapView)
-        let geoCoder = CLGeocoder()
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? BusinessAnnotation else { return nil }
         
-        guard let previousLocation = self.previousLocation else { return }
-        guard center.distance(from: previousLocation) > 50 else { return }
-        self.previousLocation = center
+        let identifier = "marker"
+        var view: MKPinAnnotationView
         
-        geoCoder.reverseGeocodeLocation(center) { [weak self] (placemarks, error) in
-            guard let self = self else { return }
-            
-            if let _ = error {
-                // TODO
-                return
-            }
-            
-            guard let placemark = placemarks?.first else {
-                //TODO
-                return
-            }
-            
-            let streetNumber = placemark.subThoroughfare ?? ""
-            let streetName = placemark.thoroughfare ?? ""
-            
-            DispatchQueue.main.async {
-                self.addressLabel.text = "\(streetNumber) \(streetName)"
-            }
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+            dequeuedView.annotation = annotation
+            view = dequeuedView
+        } else {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            let mapsButton = UIButton(frame: CGRect(origin: CGPoint.zero,
+                                                    size: CGSize(width: 30, height: 30)))
+            mapsButton.setBackgroundImage(UIImage(named: "mapsIcon"), for: UIControl.State())
+            view.rightCalloutAccessoryView = mapsButton
         }
+        
+        return view
     }
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
-        renderer.strokeColor = .blue
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl) {
+        let location = view.annotation as! BusinessAnnotation
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        location.mapItem().openInMaps(launchOptions: launchOptions)
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation as? BusinessAnnotation,
+            let inviteVC = self.inviteVC
+            else { return }
         
-        return renderer
+        inviteVC.updateViewsWith(business: annotation.business)
+        showDrawer()
+    }
+}
+
+extension MapViewController: InviteViewControllerDelegate {
+    
+    func createEventButtonTapped() {
+        //
+    }
+    
+    func viewContactsButtonTapped() {
+        //
+    }
+    
+    func timeSelectorTapped() {
+        //
     }
 }

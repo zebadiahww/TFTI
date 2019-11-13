@@ -21,13 +21,15 @@ struct InviteStrings {
 class Invite {
     let title: String?
     let venue: String
+    let duration: Date 
     let ckRecordID: CKRecord.ID
     let userReference: CKRecord.Reference
     let location: CLLocation
     
-    init(title: String? = nil, venue: String, recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), userReference: CKRecord.Reference, location: CLLocation){
+    init(title: String? = nil, venue: String, duration: Date = Date(), recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), userReference: CKRecord.Reference, location: CLLocation){
         self.title = title
         self.venue = venue
+        self.duration = duration
         self.ckRecordID = recordID
         self.userReference = userReference
         self.location = location

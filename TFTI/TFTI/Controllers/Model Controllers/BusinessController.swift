@@ -20,9 +20,11 @@ struct StringConstants {
     fileprivate static let apiKeyValue = "Bearer hhEhBrHELiG7us-gO9-etdOAJu7Gz8VX1zDPhgwKyXtAGSGVjI4x9FeyFPnccq6zRihr4021OLEF3NYge_4eWp9XrXGQvgq2IT8Lec-8CH2u9c3xBv8S08sozGPAXXYx"
 }
 
-class businessController {
+class BusinessController {
     
-    static func fetchBusiness(term: String, location: String, latitude: Double, longitude: Double, completion: @escaping ([Businesses]) -> Void) {
+    static var reviewImage: UIImage?
+    
+    static func fetchBusiness(term: String, location: String?, latitude: Double?, longitude: Double?, completion: @escaping ([Business]) -> Void) {
         
         guard var baseURL = URL(string: StringConstants.baseURL) else { completion ([]); return }
         baseURL.appendPathComponent(StringConstants.search)
@@ -32,12 +34,12 @@ class businessController {
         components.queryItems = [termQuery]
         
         
-        if location != "" {
+        if let location = location {
             let locationQuery = URLQueryItem(name: StringConstants.location, value: location)
             components.queryItems?.append(locationQuery)
         }
         
-        if latitude != 0 && longitude != 0 {
+        if let latitude = latitude, let longitude = longitude {
             let latitudeQuery = URLQueryItem(name: StringConstants.latitude, value: "\(latitude)")
             let longitudeQuery = URLQueryItem(name: StringConstants.longitude, value: "\(longitude)")
             components.queryItems?.append(latitudeQuery)
@@ -75,7 +77,7 @@ class businessController {
         dataTask.resume()
     }
     
-    static func getImage(item: Businesses, completion: @escaping (UIImage?) -> Void) {
+    static func getImage(item: Business, completion: @escaping (UIImage?) -> Void) {
         guard let posterURL = item.imageURL,
             let url = URL(string: posterURL) else {
                 print("business does not have image")
@@ -95,6 +97,30 @@ class businessController {
             }
             let image = UIImage(data: data)
             completion(image)
-            } .resume()
+        } .resume()
+    }
+    
+    static func convertYelpRating(rating: Double) {
+        if rating == 0 {
+            reviewImage = UIImage(named: "small_0")
+        } else if rating == 1 {
+            reviewImage = UIImage(named: "small_1")
+        } else if rating == 1.5 {
+            reviewImage = UIImage(named: "small_1_half")
+        } else if rating == 2 {
+            reviewImage = UIImage(named: "small_2")
+        } else if rating == 2.5 {
+            reviewImage = UIImage(named: "small_2_half")
+        } else if rating == 3 {
+            reviewImage = UIImage(named: "small_3")
+        } else if rating == 3.5 {
+            reviewImage = UIImage(named: "small_3_half")
+        } else if rating == 4 {
+            reviewImage = UIImage(named: "small_4")
+        } else if rating == 4.5 {
+            reviewImage = UIImage(named: "small_4_half")
+        } else if rating == 5 {
+            reviewImage = UIImage(named: "small_5")
+        }
     }
 } // End Of Class

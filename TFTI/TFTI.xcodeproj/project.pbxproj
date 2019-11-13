@@ -17,12 +17,15 @@
 		859D2618237086600059FEA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 859D2616237086600059FEA2 /* LaunchScreen.storyboard */; };
 		859D2624237089810059FEA2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859D2623237089810059FEA2 /* User.swift */; };
 		859D26272370917A0059FEA2 /* Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859D26262370917A0059FEA2 /* Invite.swift */; };
+		85AEFCDE2375DA68008BC91E /* businessAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */; };
+		85CF8494237CA97600922F24 /* YelpAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85CF8493237CA97600922F24 /* YelpAssets.xcassets */; };
+		85D6FCF7237A194A001B88DC /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D6FCF6237A194A001B88DC /* DateExtension.swift */; };
 		85E12D91237337BA001F6112 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E12D90237337BA001F6112 /* Business.swift */; };
 		85EF08142373685500FCE8CE /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF08132373685500FCE8CE /* InviteController.swift */; };
 		85EF08162373686C00FCE8CE /* BusinessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF08152373686C00FCE8CE /* BusinessController.swift */; };
 		85EF081823736F0F00FCE8CE /* Invite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EF081723736F0F00FCE8CE /* Invite.storyboard */; };
 		85EF081A2373771E00FCE8CE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF08192373771E00FCE8CE /* LoginViewController.swift */; };
-		85EF081C2373775000FCE8CE /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF081B2373775000FCE8CE /* InviteViewController.swift */; };
+		85EF081C2373775000FCE8CE /* InviteDrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF081B2373775000FCE8CE /* InviteDrawerViewController.swift */; };
 		85EF081E2373776900FCE8CE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF081D2373776900FCE8CE /* MapViewController.swift */; };
 		85EF0822237377A500FCE8CE /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF0821237377A500FCE8CE /* ContactsTableViewController.swift */; };
 		85EF0824237377C000FCE8CE /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF0823237377C000FCE8CE /* ContactDetailViewController.swift */; };
@@ -42,12 +45,15 @@
 		859D2619237086600059FEA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		859D2623237089810059FEA2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		859D26262370917A0059FEA2 /* Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invite.swift; sourceTree = "<group>"; };
+		85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = businessAnnotationView.swift; sourceTree = "<group>"; };
+		85CF8493237CA97600922F24 /* YelpAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YelpAssets.xcassets; sourceTree = "<group>"; };
+		85D6FCF6237A194A001B88DC /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		85E12D90237337BA001F6112 /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		85EF08132373685500FCE8CE /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
 		85EF08152373686C00FCE8CE /* BusinessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessController.swift; sourceTree = "<group>"; };
 		85EF081723736F0F00FCE8CE /* Invite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Invite.storyboard; sourceTree = "<group>"; };
 		85EF08192373771E00FCE8CE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		85EF081B2373775000FCE8CE /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		85EF081B2373775000FCE8CE /* InviteDrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteDrawerViewController.swift; sourceTree = "<group>"; };
 		85EF081D2373776900FCE8CE /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		85EF0821237377A500FCE8CE /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		85EF0823237377C000FCE8CE /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				85EF08192373771E00FCE8CE /* LoginViewController.swift */,
-				85EF081B2373775000FCE8CE /* InviteViewController.swift */,
+				85EF081B2373775000FCE8CE /* InviteDrawerViewController.swift */,
 				85EF081D2373776900FCE8CE /* MapViewController.swift */,
 				85EF0821237377A500FCE8CE /* ContactsTableViewController.swift */,
 				85EF0823237377C000FCE8CE /* ContactDetailViewController.swift */,
@@ -98,6 +104,7 @@
 		856584C52374997B00E2C4EF /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -135,6 +142,7 @@
 				859D2622237086980059FEA2 /* Models */,
 				859D26212370868D0059FEA2 /* Controllers */,
 				859D2620237086820059FEA2 /* Views */,
+				85D6FCF5237A1928001B88DC /* helpers and extensions */,
 				859D261F2370867A0059FEA2 /* Resources */,
 			);
 			path = TFTI;
@@ -146,6 +154,7 @@
 				859D260B2370865F0059FEA2 /* AppDelegate.swift */,
 				859D260D2370865F0059FEA2 /* SceneDelegate.swift */,
 				859D2614237086600059FEA2 /* Assets.xcassets */,
+				85CF8493237CA97600922F24 /* YelpAssets.xcassets */,
 				859D2616237086600059FEA2 /* LaunchScreen.storyboard */,
 				859D2619237086600059FEA2 /* Info.plist */,
 				856584C7237499B500E2C4EF /* Colors.xcassets */,
@@ -179,6 +188,14 @@
 				85E12D90237337BA001F6112 /* Business.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		85D6FCF5237A1928001B88DC /* helpers and extensions */ = {
+			isa = PBXGroup;
+			children = (
+				85D6FCF6237A194A001B88DC /* DateExtension.swift */,
+			);
+			path = "helpers and extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +258,7 @@
 			files = (
 				856584C8237499B500E2C4EF /* Colors.xcassets in Resources */,
 				859D2618237086600059FEA2 /* LaunchScreen.storyboard in Resources */,
+				85CF8494237CA97600922F24 /* YelpAssets.xcassets in Resources */,
 				859D2615237086600059FEA2 /* Assets.xcassets in Resources */,
 				859D26132370865F0059FEA2 /* Main.storyboard in Resources */,
 				85EF081823736F0F00FCE8CE /* Invite.storyboard in Resources */,
@@ -255,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85EF081E2373776900FCE8CE /* MapViewController.swift in Sources */,
+				85D6FCF7237A194A001B88DC /* DateExtension.swift in Sources */,
 				85EF081A2373771E00FCE8CE /* LoginViewController.swift in Sources */,
 				85EF0822237377A500FCE8CE /* ContactsTableViewController.swift in Sources */,
 				855B8A9D237342DD009CBCB0 /* UserController.swift in Sources */,
@@ -265,8 +284,9 @@
 				85EF0824237377C000FCE8CE /* ContactDetailViewController.swift in Sources */,
 				85E12D91237337BA001F6112 /* Business.swift in Sources */,
 				859D2624237089810059FEA2 /* User.swift in Sources */,
+				85AEFCDE2375DA68008BC91E /* businessAnnotationView.swift in Sources */,
 				85EF08142373685500FCE8CE /* InviteController.swift in Sources */,
-				85EF081C2373775000FCE8CE /* InviteViewController.swift in Sources */,
+				85EF081C2373775000FCE8CE /* InviteDrawerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

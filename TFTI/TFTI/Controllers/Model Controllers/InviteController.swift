@@ -21,7 +21,7 @@ class InviteController {
     let publicDB = CKContainer.default().publicCloudDatabase
     
     //MARK: - CRUD
-    func createInviteWith(title: String?, venue: String, location: CLLocation, completion: @escaping (_ success: Bool) -> Void) {
+    func createInviteWith(title: String?, venue: String, Date: Date = Date(), location: CLLocation, completion: @escaping (_ success: Bool) -> Void) {
         guard let userID = UserController.shared.currentUser?.ckRecordID else { return }
         let reference = CKRecord.Reference(recordID: userID, action: .deleteSelf)
         let newInvite = Invite(title: title, venue: venue, userReference: reference, location: location)
@@ -104,5 +104,22 @@ class InviteController {
         publicDB.add(operation)
     }
     
-    
-}
+    func subscribeForNotifications(completion: @escaping (_ _error: Error?) -> Void) {
+        let predicate = NSPredicate(value: true)
+        let subscription = CKQuerySubscription(recordType: InviteStrings.recordTypeKey, predicate: predicate, options: .firesOnRecordCreation)
+        let notificationInfo = CKSubscription.NotificationInfo()
+        notificationInfo.title = "You're Invited"
+        notificationInfo.alertBody = "the invite DID NOT get lost in the mail"
+        notificationInfo.shouldBadge = true
+        notificationInfo.soundName = "default"
+        
+        subscription.notificationInfo = notificationInfo
+        publicDB.save(subscription) { (_, error) in
+            if let error = error {
+                print("Error in \(#function) : \(error.localizedDescription) \n---\n \(error)")
+                completion(error)
+            }
+            completion(nil)
+        }
+    }
+} // End of Class

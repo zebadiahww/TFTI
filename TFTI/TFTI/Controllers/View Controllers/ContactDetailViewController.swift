@@ -9,6 +9,8 @@
 import UIKit
 
 class ContactDetailViewController: UIViewController {
+    
+    var friendReciever: User?
 
     override func viewDidLoad() {
         super.viewDidLoad()

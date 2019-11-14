@@ -14,7 +14,7 @@ struct InviteStrings {
     static let recordTypeKey = "Invite"
     fileprivate static let titleKey = "title"
     fileprivate static let venueKey = "venue"
-    fileprivate static let userReferenceKey = "userReference"
+    static let userReferenceKey = "userReference"
     fileprivate static let locationKey = "location"
 }
 

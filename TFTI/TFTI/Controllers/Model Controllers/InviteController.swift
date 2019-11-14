@@ -15,14 +15,14 @@ class InviteController {
     static let shared = InviteController()
     
     //MARK: - source of truth
-    var currentInvite: [Invite] = []
+    var currentInvites: [Invite] = []
     
     //MARK: - properties
     let publicDB = CKContainer.default().publicCloudDatabase
     
     //MARK: - CRUD
     func createInviteWith(venue: String, date: Date = Date(), location: CLLocation, completion: @escaping (_ success: Bool) -> Void) {
-        guard let userID = UserController.shared.currentUser?.ckRecordID else { return }
+        guard let userID = UserController.shared.currentUser?.ckRecordID else {completion(false); return }
         let reference = CKRecord.Reference(recordID: userID, action: .deleteSelf)
         let newInvite = Invite(venue: venue, userReference: reference, location: location)
         let inviteRecord = CKRecord(invite: newInvite)
@@ -36,14 +36,16 @@ class InviteController {
                 let savedInvite = Invite(ckRecord: record)
                 else { completion(false); return }
             
-            self.currentInvite.append(savedInvite)
+            self.currentInvites.append(savedInvite)
+            completion(true)
         }
     }
     
     // THE PREDICATE HERE MIGHT BE AN ISSUE LATER
     func fetchInvite(completion: @escaping (_ success: Bool) -> Void) {
         guard let currentUser = UserController.shared.currentUser else { completion(false); return }
-        let predicate = NSPredicate(format: "\(InviteStrings.recordTypeKey) ALL %@", currentUser.friendReferences)
+        let friendIDs = currentUser.friendReferences.compactMap( {$0.recordID })
+        let predicate = NSPredicate(format: "%K IN %@", argumentArray: [InviteStrings.userReferenceKey, friendIDs])
         let query = CKQuery(recordType: InviteStrings.recordTypeKey, predicate: predicate)
         publicDB.perform(query, inZoneWith: nil) { (foundRecords, error) in
             if let error = error {
@@ -56,7 +58,7 @@ class InviteController {
             
             let invites = records.compactMap( { Invite(ckRecord: $0) } )
             
-            self.currentInvite = invites
+            self.currentInvites = invites
             print("fetched invites successfully")
             completion(true)
         }

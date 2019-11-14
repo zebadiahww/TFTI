@@ -37,7 +37,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, UISearchControll
         mapView.register(MKPointAnnotation.self, forAnnotationViewWithReuseIdentifier: "pinView")
         closeDrawerButton.isEnabled = false
         setUpSearchController()
-        
+//        InviteController.shared.fetchInvite { (success) in
+//            if success {
+//                DispatchQueue.main.async {
+//                    self.reloadInputViews()
+//                }
+//            }
+//        }
     }
     
     func setUpSearchController() {
@@ -52,7 +58,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UISearchControll
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-
+    
     func showDrawer() {
         closeDrawerButton.isEnabled = true
         UIView.animate(withDuration: 0.5, animations: {
@@ -157,13 +163,15 @@ class MapViewController: UIViewController, UISearchBarDelegate, UISearchControll
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
         BusinessController.fetchBusiness(term: searchText, location: nil, latitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude) { (results) in
             DispatchQueue.main.async {
-                self.findBusinessesAnnotation(businesses: results)
+                self.fetchBusinessAnnotation(businesses: results)
             }
         }
     }
     
-    func findBusinessesAnnotation(businesses: [Business]) {
-       
+    //MARK: - annotation functions
+    
+    func fetchBusinessAnnotation(businesses: [Business]) {
+        
         var annotations : [BusinessAnnotation] = []
         for business in businesses {
             let annotation = BusinessAnnotation(business: business)
@@ -174,14 +182,25 @@ class MapViewController: UIViewController, UISearchBarDelegate, UISearchControll
         getTopResultLocation(business: businesses[0])
         searchController?.isActive = false
     }
-
+    
+    func fetchInviteAnnotation(invites: [Invite]) {
+        mapView.removeAnnotations(mapView.annotations)
+        var annotations : [InviteAnnotation] = []
+        for invite in invites {
+            let annotation = InviteAnnotation(invite: invite)
+            annotations.append(annotation)
+        }
+        mapView.addAnnotations(annotations)
+//        searchController?.isActive = false
+    }
+    
     //MARK: - Map Drawer Methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toInviteDrawerVC" {
             let inviteDrawer = segue.destination as? InviteDrawerViewController
             inviteDrawer?.delegate = self
-           
+            
             self.inviteVC = inviteDrawer
         }
     }
@@ -223,26 +242,44 @@ extension MapViewController: CLLocationManagerDelegate {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? BusinessAnnotation else { return nil }
-            
-      
-        let identifier = "marker"
+       // guard let annotation = annotation as? BusinessAnnotation else { return nil }
+        
         var view: MKPinAnnotationView
-        
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
-        } else {
-            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            let mapsButton = UIButton(frame: CGRect(origin: CGPoint.zero,
-                                                    size: CGSize(width: 30, height: 30)))
-            mapsButton.setBackgroundImage(UIImage(named: "mapsIcon"), for: UIControl.State())
-            view.rightCalloutAccessoryView = mapsButton
+        if let businessAnnotation = annotation as? BusinessAnnotation {
+            let identifier = "marker"
+            
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+                dequeuedView.annotation = businessAnnotation
+                view = dequeuedView
+            } else {
+                view = MKPinAnnotationView(annotation: businessAnnotation, reuseIdentifier: identifier)
+                view.canShowCallout = true
+                view.calloutOffset = CGPoint(x: -5, y: 5)
+                let mapsButton = UIButton(frame: CGRect(origin: CGPoint.zero,
+                                                        size: CGSize(width: 30, height: 30)))
+                mapsButton.setBackgroundImage(UIImage(named: "mapsIcon"), for: UIControl.State())
+                view.rightCalloutAccessoryView = mapsButton
+            }
+            return view
+        } else if let inviteAnnotation = annotation as? InviteAnnotation {
+            let identifier = "marker"
+            
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+                dequeuedView.annotation = inviteAnnotation
+                view = dequeuedView
+            } else {
+                view = MKPinAnnotationView(annotation: inviteAnnotation, reuseIdentifier: identifier)
+                view.pinTintColor = .purple
+                view.canShowCallout = true
+                view.calloutOffset = CGPoint(x: -5, y: 5)
+                let mapsButton = UIButton(frame: CGRect(origin: CGPoint.zero,
+                                                        size: CGSize(width: 30, height: 30)))
+                mapsButton.setBackgroundImage(UIImage(named: "mapsIcon"), for: UIControl.State())
+                view.rightCalloutAccessoryView = mapsButton
+            }
+            return view
         }
-        
-        return view
+        return nil
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
@@ -259,7 +296,7 @@ extension MapViewController: MKMapViewDelegate {
         
         inviteVC.updateViewsWith(business: annotation.business)
         self.business = annotation.business
-       
+        
         showDrawer()
     }
 }
@@ -271,10 +308,12 @@ extension MapViewController: InviteViewControllerDelegate {
         guard let business = business else {return}
         let location = CLLocation(latitude: business.coordinates.latitude, longitude: business.coordinates.longitude)
         InviteController.shared.createInviteWith(venue: business.name, location:location) { (success) in
-            
+            DispatchQueue.main.async {
+                self.fetchInviteAnnotation(invites: InviteController.shared.currentInvites)
+            }
         }
     }
-
+    
     func viewContactsButtonTapped() {
         //
     }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85079BD1237E0B6500ABC011 /* PhotoPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85079BD0237E0B6500ABC011 /* PhotoPickerViewController.swift */; };
+		8524C14E237DEE7E001F1E92 /* InviteAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524C14D237DEE7E001F1E92 /* InviteAnnotation.swift */; };
 		8527B04C237DC1E0006F271A /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8527B04B237DC1E0006F271A /* StyleGuide.swift */; };
 		855B8A9D237342DD009CBCB0 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B8A9C237342DD009CBCB0 /* UserController.swift */; };
 		856584C423748FF800E2C4EF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856584C323748FF800E2C4EF /* CloudKit.framework */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		85079BD0237E0B6500ABC011 /* PhotoPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerViewController.swift; sourceTree = "<group>"; };
+		8524C14D237DEE7E001F1E92 /* InviteAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteAnnotation.swift; sourceTree = "<group>"; };
 		8527B04B237DC1E0006F271A /* StyleGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleGuide.swift; sourceTree = "<group>"; };
 		855B8A9C237342DD009CBCB0 /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		856584C123748FE800E2C4EF /* TFTI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TFTI.entitlements; sourceTree = "<group>"; };
@@ -75,6 +79,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8524C14F237DEE8D001F1E92 /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */,
+				8524C14D237DEE7E001F1E92 /* InviteAnnotation.swift */,
+			);
+			path = Annotations;
+			sourceTree = "<group>";
+		};
 		855B8A9A2373424A009CBCB0 /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +106,7 @@
 				85EF081D2373776900FCE8CE /* MapViewController.swift */,
 				85EF0821237377A500FCE8CE /* ContactsTableViewController.swift */,
 				85EF0823237377C000FCE8CE /* ContactDetailViewController.swift */,
+				85079BD0237E0B6500ABC011 /* PhotoPickerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -108,7 +122,7 @@
 		856584C52374997B00E2C4EF /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */,
+				8524C14F237DEE8D001F1E92 /* Annotations */,
 				85CF849B237CCA0A00922F24 /* InviteButton.swift */,
 			);
 			path = "Custom Views";
@@ -288,6 +302,7 @@
 				859D260E2370865F0059FEA2 /* SceneDelegate.swift in Sources */,
 				85EF08162373686C00FCE8CE /* BusinessController.swift in Sources */,
 				85CF849C237CCA0A00922F24 /* InviteButton.swift in Sources */,
+				85079BD1237E0B6500ABC011 /* PhotoPickerViewController.swift in Sources */,
 				859D26272370917A0059FEA2 /* Invite.swift in Sources */,
 				85EF0824237377C000FCE8CE /* ContactDetailViewController.swift in Sources */,
 				85E12D91237337BA001F6112 /* Business.swift in Sources */,
@@ -295,6 +310,7 @@
 				85AEFCDE2375DA68008BC91E /* businessAnnotationView.swift in Sources */,
 				85EF08142373685500FCE8CE /* InviteController.swift in Sources */,
 				85EF081C2373775000FCE8CE /* InviteDrawerViewController.swift in Sources */,
+				8524C14E237DEE7E001F1E92 /* InviteAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

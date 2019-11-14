@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WQ9-ax-Psx">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -258,18 +258,18 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hZM-3v-17s">
                                         <rect key="frame" x="0.0" y="164" width="394" height="154"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="duk-2K-m5G">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="duk-2K-m5G">
                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="51.5"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAt-G2-qDy">
-                                                        <rect key="frame" x="0.0" y="0.0" width="197" height="51.5"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAt-G2-qDy" customClass="InviteButton" customModule="TFTI" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="195" height="51.5"/>
                                                         <state key="normal" title="Delete"/>
                                                         <connections>
                                                             <action selector="deleteButtonTapped:" destination="Qey-th-11A" eventType="touchUpInside" id="BWc-Ye-QNB"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WK7-Ut-3To">
-                                                        <rect key="frame" x="197" y="0.0" width="197" height="51.5"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WK7-Ut-3To" customClass="InviteButton" customModule="TFTI" customModuleProvider="target">
+                                                        <rect key="frame" x="199" y="0.0" width="195" height="51.5"/>
                                                         <state key="normal" title="Create"/>
                                                         <connections>
                                                             <action selector="createButtonTapped:" destination="Qey-th-11A" eventType="touchUpInside" id="eWl-sb-NDk"/>
@@ -282,7 +282,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tz7-MR-pXg">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tz7-MR-pXg" customClass="InviteButton" customModule="TFTI" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="102.5" width="394" height="51.5"/>
                                                 <state key="normal" title="Contacts"/>
                                                 <connections>
@@ -310,8 +310,11 @@
                     <connections>
                         <outlet property="businessImageView" destination="zaE-wa-RoP" id="hIP-Er-EVJ"/>
                         <outlet property="businessNameLabel" destination="s7d-mf-kCH" id="VmO-uo-VNy"/>
+                        <outlet property="contactsButton" destination="Tz7-MR-pXg" id="xUS-fI-xgl"/>
+                        <outlet property="createButton" destination="WK7-Ut-3To" id="mm3-UC-QrC"/>
                         <outlet property="datePickerTextField" destination="Wpf-cN-Ko6" id="xBP-fr-rAJ"/>
                         <outlet property="datePickerToolBar" destination="LmH-l3-C8b" id="dSb-DL-w37"/>
+                        <outlet property="deleteButton" destination="xAt-G2-qDy" id="4Ow-Fy-23Z"/>
                         <outlet property="inviteDatePicker" destination="J7W-E6-vfA" id="Z1s-2s-hDY"/>
                         <outlet property="ratingCountLabel" destination="UZe-pc-QWp" id="bL9-gE-FEl"/>
                         <outlet property="ratingImageVIew" destination="3jd-80-w8Q" id="Rkk-Ec-Owq"/>

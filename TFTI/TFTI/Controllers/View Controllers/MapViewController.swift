@@ -27,6 +27,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, UISearchControll
     var drawerIsHidden: Bool = true
     var searchController: UISearchController?
     
+    //TODO: - Fix this? Maybe delete
+    var business: Business?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationServices()
@@ -49,6 +52,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UISearchControll
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+
     func showDrawer() {
         closeDrawerButton.isEnabled = true
         UIView.animate(withDuration: 0.5, animations: {
@@ -177,6 +181,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UISearchControll
         if segue.identifier == "toInviteDrawerVC" {
             let inviteDrawer = segue.destination as? InviteDrawerViewController
             inviteDrawer?.delegate = self
+           
             self.inviteVC = inviteDrawer
         }
     }
@@ -219,7 +224,8 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? BusinessAnnotation else { return nil }
-        
+            
+      
         let identifier = "marker"
         var view: MKPinAnnotationView
         
@@ -252,16 +258,23 @@ extension MapViewController: MKMapViewDelegate {
             else { return }
         
         inviteVC.updateViewsWith(business: annotation.business)
+        self.business = annotation.business
+       
         showDrawer()
     }
 }
 
 extension MapViewController: InviteViewControllerDelegate {
     
-    func createEventButtonTapped() {
-        //
-    }
     
+    func createEventButtonTapped() {
+        guard let business = business else {return}
+        let location = CLLocation(latitude: business.coordinates.latitude, longitude: business.coordinates.longitude)
+        InviteController.shared.createInviteWith(venue: business.name, location:location) { (success) in
+            
+        }
+    }
+
     func viewContactsButtonTapped() {
         //
     }

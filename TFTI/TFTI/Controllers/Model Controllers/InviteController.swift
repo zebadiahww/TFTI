@@ -21,10 +21,10 @@ class InviteController {
     let publicDB = CKContainer.default().publicCloudDatabase
     
     //MARK: - CRUD
-    func createInviteWith(title: String?, venue: String, Date: Date = Date(), location: CLLocation, completion: @escaping (_ success: Bool) -> Void) {
+    func createInviteWith(venue: String, date: Date = Date(), location: CLLocation, completion: @escaping (_ success: Bool) -> Void) {
         guard let userID = UserController.shared.currentUser?.ckRecordID else { return }
         let reference = CKRecord.Reference(recordID: userID, action: .deleteSelf)
-        let newInvite = Invite(title: title, venue: venue, userReference: reference, location: location)
+        let newInvite = Invite(venue: venue, userReference: reference, location: location)
         let inviteRecord = CKRecord(invite: newInvite)
         publicDB.save(inviteRecord) { (record, error) in
             if let error = error {

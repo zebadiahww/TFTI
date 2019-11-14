@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import MapKit
 protocol InviteViewControllerDelegate: class {
     func createEventButtonTapped()
     func viewContactsButtonTapped()
@@ -18,6 +18,7 @@ class InviteDrawerViewController: UIViewController, UINavigationControllerDelega
     
     weak var delegate: InviteViewControllerDelegate?
     
+    
     //MARK: - Outlets
     @IBOutlet var inviteDatePicker: UIDatePicker!
     @IBOutlet weak var datePickerTextField: UITextField!
@@ -27,6 +28,11 @@ class InviteDrawerViewController: UIViewController, UINavigationControllerDelega
     @IBOutlet weak var businessNameLabel: UILabel!
     @IBOutlet weak var ratingCountLabel: UILabel!
     @IBOutlet weak var ratingImageVIew: UIImageView!
+    
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var contactsButton: UIButton!
+    
     
 
     override func viewDidLoad() {
@@ -65,6 +71,9 @@ class InviteDrawerViewController: UIViewController, UINavigationControllerDelega
     @IBAction func deleteButtonTapped(_ sender: Any) {
     }
     @IBAction func createButtonTapped(_ sender: Any) {
+        // This is where you will actually create the event.
+        
+        delegate?.createEventButtonTapped()
     }
     @IBAction func contactsButtonTapped(_ sender: Any) {
     }

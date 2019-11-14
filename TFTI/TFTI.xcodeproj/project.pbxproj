@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8527B04C237DC1E0006F271A /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8527B04B237DC1E0006F271A /* StyleGuide.swift */; };
 		855B8A9D237342DD009CBCB0 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B8A9C237342DD009CBCB0 /* UserController.swift */; };
 		856584C423748FF800E2C4EF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856584C323748FF800E2C4EF /* CloudKit.framework */; };
 		856584C8237499B500E2C4EF /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 856584C7237499B500E2C4EF /* Colors.xcassets */; };
@@ -19,6 +20,7 @@
 		859D26272370917A0059FEA2 /* Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859D26262370917A0059FEA2 /* Invite.swift */; };
 		85AEFCDE2375DA68008BC91E /* businessAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */; };
 		85CF8494237CA97600922F24 /* YelpAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85CF8493237CA97600922F24 /* YelpAssets.xcassets */; };
+		85CF849C237CCA0A00922F24 /* InviteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CF849B237CCA0A00922F24 /* InviteButton.swift */; };
 		85D6FCF7237A194A001B88DC /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D6FCF6237A194A001B88DC /* DateExtension.swift */; };
 		85E12D91237337BA001F6112 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E12D90237337BA001F6112 /* Business.swift */; };
 		85EF08142373685500FCE8CE /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EF08132373685500FCE8CE /* InviteController.swift */; };
@@ -32,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8527B04B237DC1E0006F271A /* StyleGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleGuide.swift; sourceTree = "<group>"; };
 		855B8A9C237342DD009CBCB0 /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		856584C123748FE800E2C4EF /* TFTI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TFTI.entitlements; sourceTree = "<group>"; };
 		856584C323748FF800E2C4EF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -47,6 +50,7 @@
 		859D26262370917A0059FEA2 /* Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invite.swift; sourceTree = "<group>"; };
 		85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = businessAnnotationView.swift; sourceTree = "<group>"; };
 		85CF8493237CA97600922F24 /* YelpAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YelpAssets.xcassets; sourceTree = "<group>"; };
+		85CF849B237CCA0A00922F24 /* InviteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteButton.swift; sourceTree = "<group>"; };
 		85D6FCF6237A194A001B88DC /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		85E12D90237337BA001F6112 /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		85EF08132373685500FCE8CE /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				85AEFCDD2375DA68008BC91E /* businessAnnotationView.swift */,
+				85CF849B237CCA0A00922F24 /* InviteButton.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				85D6FCF6237A194A001B88DC /* DateExtension.swift */,
+				8527B04B237DC1E0006F271A /* StyleGuide.swift */,
 			);
 			path = "helpers and extensions";
 			sourceTree = "<group>";
@@ -272,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8527B04C237DC1E0006F271A /* StyleGuide.swift in Sources */,
 				85EF081E2373776900FCE8CE /* MapViewController.swift in Sources */,
 				85D6FCF7237A194A001B88DC /* DateExtension.swift in Sources */,
 				85EF081A2373771E00FCE8CE /* LoginViewController.swift in Sources */,
@@ -280,6 +287,7 @@
 				859D260C2370865F0059FEA2 /* AppDelegate.swift in Sources */,
 				859D260E2370865F0059FEA2 /* SceneDelegate.swift in Sources */,
 				85EF08162373686C00FCE8CE /* BusinessController.swift in Sources */,
+				85CF849C237CCA0A00922F24 /* InviteButton.swift in Sources */,
 				859D26272370917A0059FEA2 /* Invite.swift in Sources */,
 				85EF0824237377C000FCE8CE /* ContactDetailViewController.swift in Sources */,
 				85E12D91237337BA001F6112 /* Business.swift in Sources */,

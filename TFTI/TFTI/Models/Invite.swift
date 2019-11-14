@@ -19,15 +19,13 @@ struct InviteStrings {
 }
 
 class Invite {
-    let title: String?
     let venue: String
     let duration: Date 
     let ckRecordID: CKRecord.ID
     let userReference: CKRecord.Reference
     let location: CLLocation
     
-    init(title: String? = nil, venue: String, duration: Date = Date(), recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), userReference: CKRecord.Reference, location: CLLocation){
-        self.title = title
+    init(venue: String, duration: Date = Date(), recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), userReference: CKRecord.Reference, location: CLLocation){
         self.venue = venue
         self.duration = duration
         self.ckRecordID = recordID
@@ -44,13 +42,12 @@ extension Invite: Equatable {
 
 extension Invite {
     convenience init?(ckRecord: CKRecord) {
-        guard let title = ckRecord[InviteStrings.titleKey] as? String,
-            let venue = ckRecord[InviteStrings.venueKey] as? String,
+        guard let venue = ckRecord[InviteStrings.venueKey] as? String,
             let location = ckRecord[InviteStrings.locationKey] as? CLLocation,
             let userReference = ckRecord[InviteStrings.userReferenceKey] as? CKRecord.Reference
             else { return nil }
         
-        self.init(title: title, venue: venue, recordID: ckRecord.recordID, userReference: userReference, location: location)
+        self.init(venue: venue, recordID: ckRecord.recordID, userReference: userReference, location: location)
     }
 }
 
@@ -59,7 +56,6 @@ extension CKRecord {
     convenience init(invite: Invite) {
         self.init(recordType: InviteStrings.recordTypeKey, recordID: invite.ckRecordID)
         self.setValuesForKeys([
-            InviteStrings.titleKey : invite.title!,
             InviteStrings.venueKey : invite.venue,
             InviteStrings.userReferenceKey : invite.userReference,
             InviteStrings.locationKey : invite.location
